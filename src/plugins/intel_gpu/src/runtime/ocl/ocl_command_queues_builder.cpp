@@ -68,6 +68,8 @@ std::vector<cl_queue_properties> command_queues_builder::get_properties(const cl
                                                  CL_QUEUE_INDEX_INTEL, stream_id % num_queues});
     }
 
+    _profiling = true;
+
     cl_command_queue_properties cl_queue_properties =
         ((_profiling ? CL_QUEUE_PROFILING_ENABLE : 0) | (_out_of_order ? CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE : 0));
 
