@@ -53,21 +53,24 @@ std::vector<cl_queue_properties> command_queues_builder::get_properties(const cl
 
     if (_supports_queue_families) {
         cl_uint num_queues = 0;
-        cl_uint family = 0;
+        
+        // workaround oneprof error
+        // cl_uint family = 0;
 
         std::vector<cl_queue_family_properties_intel> qfprops = device.getInfo<CL_DEVICE_QUEUE_FAMILY_PROPERTIES_INTEL>();
         for (cl_uint q = 0; q < qfprops.size(); q++) {
             if (qfprops[q].capabilities == CL_QUEUE_DEFAULT_CAPABILITIES_INTEL && qfprops[q].count > num_queues) {
-                family = q;
+                // family = q;
                 num_queues = qfprops[q].count;
             }
         }
 
-        if (num_queues)
-            properties.insert(properties.end(), {CL_QUEUE_FAMILY_INTEL, family,
-                                                 CL_QUEUE_INDEX_INTEL, stream_id % num_queues});
+        //if (num_queues)
+        //    properties.insert(properties.end(), {CL_QUEUE_FAMILY_INTEL, family,
+        //                                         CL_QUEUE_INDEX_INTEL, stream_id % num_queues});
     }
 
+    //workaround oneprof error
     _profiling = true;
 
     cl_command_queue_properties cl_queue_properties =
